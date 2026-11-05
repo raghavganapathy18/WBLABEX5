@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Craft.co — A Store that is built by Hands</title>
+<style>
+  :root{
+    --pink-bg: #fbdff0;
+    --pink-bg-2: #f6d3ea;
+    --ink: #1a1a1a;
+    --white: #ffffff;
+    --border: #1a1a1a;
+    --btn-blue: #aab8ea;
+    --btn-blue-dark: #8fa0e0;
+    --slider-red: #e0384c;
+    --muted: #6b6b6b;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--pink-bg);
+    color: var(--ink);
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  img { max-width: 100%; display: block; }
+
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  /* ---------- Header ---------- */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 40px;
+  }
+
+  .logo {
+    font-weight: 800;
+    font-size: 1.4rem;
+    letter-spacing: 0.5px;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 34px;
+    margin: 0;
+    padding: 0;
+  }
+
+  nav a {
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  /* ---------- Nav dropdown ---------- */
+  .nav-item {
+    position: relative;
+  }
+
+  .nav-item > a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 2px;
+    transition: color 0.2s ease;
+  }
+
+  .nav-item > a::after {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-right: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    transform: rotate(45deg);
+    margin-top: -4px;
+  }
+
+  .nav-item:hover > a,
+  .nav-item.open > a {
+    color: #c23b7a;
+  }
+
+  .dropdown-menu {
+    display: none;
+    list-style: none;
+    position: absolute;
+    top: calc(100% + 14px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+    padding: 8px;
+    min-width: 190px;
+    z-index: 30;
+    margin: 0;
+  }
+
+  .nav-item:hover .dropdown-menu,
+  .nav-item.open .dropdown-menu {
+    display: block;
+  }
+
+  .dropdown-menu li a {
+    display: block;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .dropdown-menu li a:hover {
+    background: var(--pink-bg-2);
+    color: #c23b7a;
+  }
+
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: var(--ink);
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    text-align: center;
+    padding: 30px 20px 40px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.6rem, 7vw, 4.5rem);
+    font-weight: 800;
+    margin: 0;
+    line-height: 1;
+  }
+
+  .hero h2 {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-weight: 700;
+    margin: 10px 0 0;
+  }
+
+  /* ---------- Product grid ---------- */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+    padding: 20px 40px 10px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .product-card {
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--white);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+
+  .product-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ---------- Get Yours Customised ---------- */
+  .customise-section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    padding: 60px 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .customise-section h2 {
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    margin: 0;
+    line-height: 1.1;
+    flex: 1 1 300px;
+  }
+
+  table.price-table {
+    border-collapse: collapse;
+    background: var(--pink-bg-2);
+    flex: 1 1 400px;
+    max-width: 480px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  table.price-table th, table.price-table td {
+    border: 1px solid rgba(0,0,0,0.35);
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 0.95rem;
+  }
+
+  table.price-table th {
+    font-weight: 700;
+    background: var(--pink-bg-2);
+  }
+
+  .order-like {
+    text-align: center;
+    padding: 30px 20px 10px;
+    font-size: 1.1rem;
+  }
+
+  /* ---------- Form ---------- */
+  .form-wrapper {
+    max-width: 1120px;
+    margin: 20px auto 60px;
+    padding: 40px;
+    border: 2px solid var(--border);
+    border-radius: 18px;
+    background: var(--pink-bg);
+  }
+
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-bottom: 26px;
+  }
+
+  .field {
+    flex: 1 1 300px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .field label, fieldset legend, .group-label {
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+
+  .field input[type="text"],
+  .field input[type="tel"],
+  .field input[type="email"],
+  .field input[type="date"],
+  .field select {
+    border: 1px solid rgba(0,0,0,0.5);
+    border-radius: 30px;
+    padding: 12px 18px;
+    font-size: 1rem;
+    background: var(--pink-bg);
+    color: var(--ink);
+    width: 100%;
+    font-family: inherit;
+  }
+
+  .field input::placeholder { color: rgba(0,0,0,0.45); }
+
+  .field select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='10'%3E%3Cpath d='M1 1l6 7 6-7' stroke='%23000' stroke-width='1.5' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 18px center;
+  }
+
+  .file-field {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border: 1px solid rgba(0,0,0,0.5);
+    border-radius: 30px;
+    padding: 8px 8px 8px 8px;
+  }
+
+  .file-field .choose-btn {
+    border: 1px solid rgba(0,0,0,0.6);
+    border-radius: 20px;
+    padding: 8px 18px;
+    background: var(--white);
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+
+  .file-field .file-name {
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .checkbox-group, .radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 26px;
+    align-items: center;
+  }
+
+  .checkbox-group label, .radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1rem;
+    font-weight: 400;
+    cursor: pointer;
+  }
+
+  .checkbox-group input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--ink);
+  }
+
+  .radio-group input[type="radio"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--ink);
+  }
+
+  textarea {
+    border: 1px solid rgba(0,0,0,0.5);
+    border-radius: 16px;
+    padding: 16px 18px;
+    font-size: 1rem;
+    font-family: inherit;
+    background: var(--pink-bg);
+    resize: vertical;
+    min-height: 130px;
+    width: 100%;
+  }
+
+  .rate-slider {
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    border-radius: 4px;
+    background: linear-gradient(to right, var(--slider-red) 0%, var(--slider-red) 50%, #f2c7de 50%, #f2c7de 100%);
+    outline: none;
+  }
+
+  .rate-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--slider-red);
+    cursor: pointer;
+    border: none;
+  }
+
+  .rate-slider::-moz-range-thumb {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--slider-red);
+    cursor: pointer;
+    border: none;
+  }
+
+  .submit-btn-wrap {
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .submit-btn {
+    background: var(--btn-blue);
+    border: none;
+    padding: 16px 60px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+    color: var(--ink);
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+
+  .submit-btn:hover {
+    background: var(--btn-blue-dark);
+    transform: translateY(-1px);
+  }
+
+  .submit-btn:focus-visible,
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 3px solid #333;
+    outline-offset: 2px;
+  }
+
+  /* ---------- Sign In / Sign Up ---------- */
+  .auth-section {
+    background:
+      linear-gradient(rgba(60, 20, 45, 0.35), rgba(60, 20, 45, 0.35)),
+      url("https://images.unsplash.com/photo-1528812969535-4bcefadbb26f?auto=format&fit=crop&w=1600&q=80");
+    background-size: cover;
+    background-position: center;
+    padding: 70px 40px;
+  }
+
+  .auth-section h2 {
+    text-align: center;
+    color: var(--white);
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    font-weight: 800;
+    margin: 0 0 40px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.35);
+  }
+
+  .auth-boxes {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 44px;
+    flex-wrap: wrap;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .auth-box {
+    background: var(--white);
+    width: 100%;
+    max-width: 330px;
+    padding: 32px 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  }
+
+  .auth-box h3 {
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin: 0 0 22px;
+  }
+
+  .auth-box label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+  }
+
+  .auth-box input[type="text"],
+  .auth-box input[type="email"],
+  .auth-box input[type="password"] {
+    width: 100%;
+    padding: 11px 14px;
+    margin-bottom: 18px;
+    border: 1px solid rgba(0,0,0,0.25);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    background: #faf7f9;
+  }
+
+  .auth-box input:focus {
+    outline: none;
+    border-color: #c23b7a;
+    background: var(--white);
+  }
+
+  .auth-box .auth-submit {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: var(--btn-blue);
+    color: var(--ink);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+
+  .auth-box .auth-submit:hover {
+    background: var(--btn-blue-dark);
+    transform: translateY(-1px);
+  }
+
+  .auth-switch {
+    text-align: center;
+    font-size: 0.85rem;
+    margin-top: 14px;
+    color: var(--muted);
+  }
+
+  .auth-switch a {
+    color: #c23b7a;
+    font-weight: 600;
+  }
+
+  /* ---------- Testimonials ---------- */
+  .testimonials-wrapper {
+    max-width: 1120px;
+    margin: 0 auto 60px;
+    padding: 40px;
+    border: 2px solid var(--border);
+    border-radius: 18px;
+  }
+
+  .testimonials-wrapper h2 {
+    text-align: center;
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    font-weight: 800;
+    margin: 0 0 34px;
+  }
+
+  .video-card {
+    max-width: 640px;
+    margin: 0 auto;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.15);
+  }
+
+  .video-thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/10;
+    background: #333;
+    overflow: hidden;
+  }
+
+  .video-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .video-thumb .duration {
+    position: absolute;
+    bottom: 10px;
+    right: 12px;
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .caption {
+    text-align: center;
+    font-weight: 600;
+    margin: 16px 0 26px;
+  }
+
+  .audio-player {
+    max-width: 640px;
+    margin: 0 auto;
+    background: #4a4a4a;
+    border-radius: 30px;
+    padding: 10px 22px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: #fff;
+  }
+
+  .audio-player .play-btn {
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 12px solid #fff;
+    cursor: pointer;
+  }
+
+  .audio-player .track {
+    flex: 1;
+    height: 4px;
+    background: rgba(255,255,255,0.35);
+    border-radius: 4px;
+    position: relative;
+  }
+
+  .audio-player .track::after {
+    content: "";
+    position: absolute;
+    left: 0; top: -3px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #fff;
+  }
+
+  .audio-player .time {
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  .audio-caption {
+    text-align: center;
+    font-weight: 600;
+    margin-top: 20px;
+  }
+
+  /* ---------- Location ---------- */
+  .location-wrapper {
+    max-width: 1120px;
+    margin: 0 auto 40px;
+    padding: 28px;
+    border: 2px solid var(--border);
+    border-radius: 18px;
+  }
+
+  .location-wrapper h2 {
+    text-align: center;
+    text-transform: lowercase;
+    font-weight: 600;
+    font-size: 1.3rem;
+    margin: 0 0 20px;
+  }
+
+  .map-frame {
+    width: 100%;
+    height: 420px;
+    border: 0;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .map-frame iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  /* ---------- Footer ---------- */
+  footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 12px;
+    padding: 24px 40px 40px;
+    font-size: 0.9rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  footer p { margin: 2px 0; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px) {
+    .product-grid { grid-template-columns: repeat(2, 1fr); }
+    .form-wrapper, .testimonials-wrapper, .location-wrapper { margin-left: 20px; margin-right: 20px; padding: 28px; }
+    header, .customise-section, .product-grid, footer { padding-left: 20px; padding-right: 20px; }
+  }
+
+  @media (max-width: 700px) {
+    nav ul {
+      display: none;
+      position: absolute;
+      top: 68px;
+      right: 20px;
+      left: 20px;
+      background: var(--pink-bg-2);
+      flex-direction: column;
+      gap: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+      z-index: 20;
+    }
+    nav ul.open { display: flex; }
+    nav ul li { width: 100%; }
+    nav ul a { display: block; padding: 14px 20px; }
+    .nav-toggle { display: block; }
+    header { position: relative; padding: 20px; }
+
+    .nav-item > a::after { margin-left: auto; margin-top: 0; }
+    .dropdown-menu {
+      display: none;
+      position: static;
+      transform: none;
+      box-shadow: none;
+      border-radius: 0;
+      background: var(--pink-bg);
+      padding: 0 0 0 20px;
+      min-width: 0;
+    }
+    .nav-item.open .dropdown-menu { display: block; }
+    .nav-item:hover .dropdown-menu { display: none; }
+    .nav-item.open:hover .dropdown-menu { display: block; }
+  }
+
+  @media (max-width: 560px) {
+    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .form-row { gap: 20px; }
+    .form-wrapper { padding: 22px; border-radius: 14px; }
+    .checkbox-group, .radio-group { gap: 16px; }
+    .submit-btn { padding: 14px 44px; width: 100%; }
+    footer { flex-direction: column; align-items: flex-start; }
+    table.price-table th, table.price-table td { padding: 10px 10px; font-size: 0.85rem; }
+    .auth-section { padding: 50px 20px; }
+    .auth-boxes { gap: 26px; }
+    .auth-box { max-width: 100%; padding: 26px 22px; }
+  }
+
+  /* ---------- Craft Tools (JS DOM & events) ---------- */
+  .tools-section { max-width: 1120px; margin: 0 auto 60px; padding: 0 40px; }
+  .tools-section > h2 { text-align: center; font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 800; margin: 0 0 8px; }
+  .tools-intro { text-align: center; margin: 0 auto 30px; max-width: 560px; }
+  .tool-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; }
+  .tool-card { border: 2px solid var(--border); border-radius: 18px; padding: 26px; background: var(--pink-bg); }
+  .tool-card.wide { grid-column: 1 / -1; }
+  .tool-card h3 { margin: 0 0 6px; font-size: 1.25rem; font-weight: 800; }
+  .tool-card .hint { margin: 0 0 16px; font-size: 0.9rem; color: var(--muted); }
+  .tool-card fieldset { border: none; padding: 0; margin: 0; }
+  .tool-card label { display: block; font-size: 0.95rem; font-weight: 500; margin: 0 0 6px; }
+  .tool-card input[type="text"], .tool-card select {
+    width: 100%; border: 1px solid rgba(0,0,0,0.5); border-radius: 30px; padding: 10px 16px;
+    font-size: 1rem; font-family: inherit; background: var(--pink-bg); color: var(--ink); margin-bottom: 12px;
+  }
+  .tool-card .inline { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 12px; }
+  .tool-card .inline select, .tool-card .inline input[type="text"] { width: auto; flex: 1 1 110px; margin-bottom: 0; }
+  .tool-btn {
+    background: var(--btn-blue); border: none; padding: 11px 26px; font-size: 1rem; font-weight: 600;
+    border-radius: 30px; cursor: pointer; color: var(--ink); font-family: inherit;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+  .tool-btn:hover { background: var(--btn-blue-dark); transform: translateY(-1px); }
+  .tool-card .result { margin: 14px 0 0; font-size: 1rem; line-height: 1.6; }
+  .tool-card .result span { font-weight: 700; }
+  .tool-card .radio-line { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 12px; }
+  .tool-card .radio-line label { display: flex; align-items: center; gap: 6px; font-weight: 400; margin: 0; cursor: pointer; }
+  .tool-card .radio-line input { accent-color: var(--ink); }
+  .tool-card .error { color: #b3182e; font-size: 0.9rem; min-height: 1.2em; margin: 8px 0 0; }
+
+  #garden { display: grid; gap: 4px; margin-top: 14px; }
+  #garden img { width: 100%; max-width: 44px; aspect-ratio: 1; object-fit: contain; background: var(--white); border-radius: 6px; }
+  #coin { width: 110px; height: 110px; border-radius: 50%; margin: 0 auto 14px; background: var(--white); border: 2px solid var(--ink); }
+  .coin-wrap { text-align: center; }
+
+  .events-table-wrap { max-height: 260px; overflow: auto; border: 1px solid rgba(0,0,0,0.35); border-radius: 8px; margin-top: 10px; }
+  .events-table-wrap table { border-collapse: collapse; width: 100%; background: var(--pink-bg-2); }
+  .events-table-wrap th, .events-table-wrap td { border: 1px solid rgba(0,0,0,0.25); padding: 8px 12px; text-align: left; font-size: 0.9rem; }
+  .events-table-wrap th { position: sticky; top: 0; background: var(--pink-bg-2); }
+
+  .playground-box {
+    border: 2px dashed var(--ink); border-radius: 14px; padding: 26px 16px; text-align: center;
+    background: var(--white); cursor: pointer; user-select: none; margin-bottom: 12px;
+  }
+  .playground-box.hover { background: var(--pink-bg-2); }
+  #eventLog { list-style: none; margin: 0; padding: 0; font-size: 0.9rem; min-height: 7.5em; }
+  #eventLog li { padding: 3px 0; border-bottom: 1px solid rgba(0,0,0,0.12); }
+  .dom-btns { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 8px; }
+  .hl { outline: 4px solid var(--slider-red) !important; outline-offset: 3px; transition: outline 0.2s ease; }
+
+  @media (max-width: 900px) { .tools-section { padding: 0 20px; } }
+  @media (max-width: 560px) { .tool-card { padding: 20px; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">CRAFT.CO</div>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
+  <nav>
+    <ul id="navMenu">
+      <li class="nav-item">
+        <a href="#home">Home</a>
+        <ul class="dropdown-menu">
+          <li><a href="#home">New Arrivals</a></li>
+          <li><a href="#orders">Best Sellers</a></li>
+          <li><a href="#orders">Custom Orders</a></li>
+          <li><a href="#about">Gift Sets</a></li>
+        </ul>
+      </li>
+      <li><a href="#orders">Orders</a></li>
+      <li><a href="#tools">Tools</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#auth">Sign In</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <h1>A Store</h1>
+  <h2>that is built by Hands</h2>
+</section>
+
+<section class="product-grid">
+  <div class="product-card"><img src="gift.jpeg" alt="Crochet keychain"></div>
+  <div class="product-card"><img src="bag2.jpeg" alt="Crochet backpack"></div>
+  <div class="product-card"><img src="top1.jpeg" alt="Handmade sweater"></div>
+  <div class="product-card"><img src="doll1.jpeg" alt="Crochet bunny toy"></div>
+</section>
+
+<section class="customise-section" id="orders">
+  <h2>Get Yours<br>Customised</h2>
+  <table class="price-table">
+    <thead>
+      <tr><th>Sno</th><th>Product</th><th>Rate</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>Customised Photo Frame Large</td><td>&#8377; 599</td></tr>
+      <tr><td>2</td><td>Customised Photo Frame Medium</td><td>&#8377; 199</td></tr>
+      <tr><td>3</td><td>Customised Photo Frame Small</td><td>&#8377; 99</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<p class="order-like">Or Order As You Like Below</p>
+
+<form class="form-wrapper" id="orderForm">
+  <div class="form-row">
+    <div class="field">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+    <div class="field">
+      <label for="phone">Phone No</label>
+      <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="field" style="flex-basis:100%;">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="field" style="flex-basis:100%;">
+      <label for="category">Category</label>
+      <select id="category" name="category" required>
+        <option value="" selected disabled>Select Category</option>
+        <option value="photo-frame">Photo Frame</option>
+        <option value="keychain">Keychain</option>
+        <option value="bag">Bag</option>
+        <option value="apparel">Apparel</option>
+        <option value="soft-toy">Soft Toy</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="field">
+      <label for="expected-date">Expected Date</label>
+      <input type="date" id="expected-date" name="expected-date">
+    </div>
+    <div class="field">
+      <label for="reference-image">Reference Image</label>
+      <div class="file-field">
+        <label class="choose-btn" for="reference-image">Choose File</label>
+        <span class="file-name" id="fileName">No file selected</span>
+        <input type="file" id="reference-image" name="reference-image" accept="image/*" style="display:none;">
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <fieldset style="flex-basis:100%; border:none; padding:0; margin:0;">
+      <legend class="group-label">How do you get to know about Craft.co ?</legend>
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="source" value="TV"> TV</label>
+        <label><input type="checkbox" name="source" value="Magazine"> Magazine</label>
+        <label><input type="checkbox" name="source" value="Social"> Social</label>
+        <label><input type="checkbox" name="source" value="Friends"> Friends</label>
+        <label><input type="checkbox" name="source" value="Others"> Others</label>
+        <label><input type="checkbox" name="source" value="Connection"> Connection</label>
+      </div>
+    </fieldset>
+  </div>
+
+  <div class="form-row">
+    <fieldset style="flex-basis:100%; border:none; padding:0; margin:0;">
+      <legend class="group-label">Mode of Payment</legend>
+      <div class="radio-group">
+        <label><input type="radio" name="payment" value="COD" checked> Cash on Delivery</label>
+        <label><input type="radio" name="payment" value="Card"> Debit / Credit Card</label>
+        <label><input type="radio" name="payment" value="Netbanking"> Netbanking</label>
+        <label><input type="radio" name="payment" value="UPI"> UPI</label>
+      </div>
+    </fieldset>
+  </div>
+
+  <div class="form-row">
+    <div class="field" style="flex-basis:100%;">
+      <label for="feedback">Feedback</label>
+      <textarea id="feedback" name="feedback"></textarea>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="field" style="flex-basis:100%;">
+      <label for="rate">Rate Us</label>
+      <input type="range" id="rate" name="rate" class="rate-slider" min="1" max="10" value="5">
+    </div>
+  </div>
+
+  <div class="submit-btn-wrap">
+    <button type="submit" class="submit-btn">Submit</button>
+  </div>
+</form>
+
+<section class="tools-section" id="tools">
+  <h2>Craft Tools</h2>
+  <p class="tools-intro">Plan your order before you place it: check sizes, convert prices, price a cake and more.</p>
+
+  <div class="tool-grid">
+
+    <div class="tool-card">
+      <h3>Name checker</h3>
+      <p class="hint">Find the shortest and longest word in a product name or message.</p>
+      <fieldset>
+        <label for="wordInput">Text</label>
+        <input type="text" id="wordInput" value="Web Development Tutorial">
+        <button type="button" class="tool-btn" id="wordBtn">Find words</button>
+        <p class="result">Shortest: <span id="shortest">–</span><br>Longest: <span id="longest">–</span></p>
+      </fieldset>
+    </div>
+
+    <div class="tool-card">
+      <h3>Fit finder (BMI)</h3>
+      <p class="hint">Enter weight and height to get your BMI and body type for apparel sizing.</p>
+      <fieldset>
+        <label for="weight">Weight (in kilograms)</label>
+        <input type="text" id="weight">
+        <label for="height">Height (in meters)</label>
+        <input type="text" id="height">
+        <button type="button" class="tool-btn" onclick="calculate();">Get BMI</button>
+        <p class="error" id="bmiError" role="alert"></p>
+        <p class="result">Your BMI is <span id="score">–</span>.<br>Your body type is <span id="type">–</span>.</p>
+      </fieldset>
+    </div>
+
+    <div class="tool-card">
+      <h3>Fruit farm</h3>
+      <p class="hint">Plant a grid of apples and oranges. Each square is picked at random (max 15 × 15).</p>
+      <div>
+        <div class="inline">
+          <input type="text" id="rows" placeholder="Rows" aria-label="Rows">
+          <input type="text" id="columns" placeholder="Columns" aria-label="Columns">
+        </div>
+        <button type="button" class="tool-btn" onclick="grow();">Plant Garden</button>
+        <p class="error" id="gardenError" role="alert"></p>
+      </div>
+      <div id="garden"></div>
+    </div>
+
+    <div class="tool-card">
+      <h3>Currency converter</h3>
+      <p class="hint">Convert prices between rupees and dollars. ₹1 = $0.015 and $1 = ₹67.12.</p>
+      <fieldset>
+        <div class="inline">
+          <input type="text" id="data" placeholder="Amount" aria-label="Amount">
+          <select id="from" aria-label="Convert from">
+            <option value="inr">Indian Rupee</option>
+            <option value="usd">US Dollar</option>
+          </select>
+          <span>to</span>
+          <select id="to" aria-label="Convert to">
+            <option value="usd">US Dollar</option>
+            <option value="inr">Indian Rupee</option>
+          </select>
+        </div>
+        <button type="button" class="tool-btn" onclick="convert();">Calculate</button>
+        <p class="result">Answer: <span id="answer">–</span></p>
+      </fieldset>
+    </div>
+
+    <div class="tool-card">
+      <h3>Heads or tails?</h3>
+      <p class="hint">Can’t decide on a colour? Flip a coin and we keep count.</p>
+      <div class="coin-wrap">
+        <img src="heads.jpg" id="coin" alt="Coin showing heads">
+        <button type="button" class="tool-btn" id="flip">Flip!</button>
+        <p class="result">Heads total: <span id="num_heads">0</span><br>Tails total: <span id="num_tails">0</span></p>
+      </div>
+    </div>
+
+    <div class="tool-card">
+      <h3>Birthday cake order</h3>
+      <p class="hint">½ kg ₹100, 1 kg ₹200, 2 kg ₹400. 9% tax is added, then your tip on the total.</p>
+      <fieldset>
+        <label for="small">Number of ½ kg cakes</label>
+        <input type="text" id="small" value="0">
+        <label for="medium">Number of 1 kg cakes</label>
+        <input type="text" id="medium" value="0">
+        <label for="large">Number of 2 kg cakes</label>
+        <input type="text" id="large" value="0">
+        <label>Tip</label>
+        <div class="radio-line">
+          <label><input type="radio" value="10" name="tip"> 10%</label>
+          <label><input type="radio" value="15" name="tip" checked="checked"> 15%</label>
+          <label><input type="radio" value="20" name="tip"> 20%</label>
+        </div>
+        <button type="button" class="tool-btn" id="submit">Calculate Order</button>
+        <p class="result">Cost of order: <span id="price">–</span></p>
+      </fieldset>
+    </div>
+
+    <div class="tool-card wide">
+      <h3>Find elements on this page</h3>
+      <p class="hint">Each button finds elements a different way and highlights them.</p>
+      <div class="dom-btns">
+        <button type="button" class="tool-btn" data-find="id">By id (#home)</button>
+        <button type="button" class="tool-btn" data-find="tag">By tag name (p)</button>
+        <button type="button" class="tool-btn" data-find="class">By class name (product-card)</button>
+        <button type="button" class="tool-btn" data-find="css">By CSS selector (p.order-like)</button>
+      </div>
+      <p class="result" id="findResult" aria-live="polite">Pick a method to see what it finds.</p>
+      <p class="result" id="demo" aria-live="polite">Click anywhere on the page to see where you clicked.</p>
+    </div>
+
+    <div class="tool-card wide">
+      <h3>Event playground</h3>
+      <p class="hint">Interact with the box and the field below to watch events fire.</p>
+      <div class="playground-box" id="playBox" tabindex="0">Hover, click, double-click, press or drag here</div>
+      <label for="playInput">Type here (focus, key and change events)</label>
+      <input type="text" id="playInput" placeholder="Type, then click away">
+      <ul id="eventLog" aria-live="off"><li>No events yet.</li></ul>
+      <p class="result">Window: loaded <span id="loadInfo">–</span> · size <span id="sizeInfo">–</span> · scrolled <span id="scrollInfo">0</span>px</p>
+
+    </div>
+
+  </div>
+</section>
+
+<section class="auth-section" id="auth">
+  <h2>Sign In / Sign Up</h2>
+  <div class="auth-boxes">
+    <div class="auth-box">
+      <h3>Sign In</h3>
+      <form id="signInForm">
+        <label for="si-username">Username</label>
+        <input type="text" id="si-username" name="username" placeholder="Enter Username / Email" required>
+        <label for="si-password">Password</label>
+        <input type="password" id="si-password" name="password" placeholder="Enter Password" required>
+        <button type="submit" class="auth-submit">Sign In</button>
+        <p class="auth-switch">New here? <a href="#signUpForm">Create an account</a></p>
+      </form>
+    </div>
+    <div class="auth-box">
+      <h3>Sign Up</h3>
+      <form id="signUpForm">
+        <label for="su-name">Name</label>
+        <input type="text" id="su-name" name="name" placeholder="Enter Name" required>
+        <label for="su-email">Email</label>
+        <input type="email" id="su-email" name="email" placeholder="Enter Email" required>
+        <label for="su-password">Password</label>
+        <input type="password" id="su-password" name="password" placeholder="Enter Password" required>
+        <button type="submit" class="auth-submit">Sign Up</button>
+        <p class="auth-switch">Already a member? <a href="#signInForm">Sign in</a></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials-wrapper" id="about">
+  <h2>Testimonials</h2>
+
+  <div class="video-card">
+    <div class="video-thumb">
+      <img src="thumbnail.png" alt="Video note from customer">
+      <span class="duration">1:07</span>
+    </div>
+  </div>
+  <p class="caption">Video Note from Customer</p>
+
+  <div class="audio-player">
+    <span class="play-btn"></span>
+    <span class="time">00:00</span>
+    <div class="track"></div>
+    <span class="time">00:00</span>
+  </div>
+  <p class="audio-caption">Audio Note from Customer</p>
+</section>
+
+<section class="location-wrapper" id="contact">
+  <h2>location</h2>
+  <div class="map-frame">
+    <iframe
+      src="https://www.google.com/maps/place/Karunya+Institute+of+Technology+and+Sciences+(Deemed+University)/@10.936164,76.7414861,17z/data=!3m1!4b1!4m6!3m5!1s0x3ba866bd6aaaaaab:0xc650b8a75e7b51f0!8m2!3d10.936164!4d76.744061!16s%2Fm%2F0cr30sk?entry=ttu&g_ep=EgoyMDI2MTAyOC4wIKXMDSoASAFQAw%3D%3D"
+      allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+      title="Craft.co location map">
+    </iframe>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <p><strong>Contact Us</strong></p>
+    <p>Phone &nbsp; +91 97666 54375</p>
+    <p>Email &nbsp; www.hello@craft.co</p>
+  </div>
+  <div>
+    <p>www.craft.co</p>
+  </div>
+</footer>
+
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const navMenu = document.getElementById('navMenu');
+  navToggle.addEventListener('click', () => {
+    const isOpen = navMenu.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', isOpen);
+  });
+
+  const fileInput = document.getElementById('reference-image');
+  const fileNameLabel = document.getElementById('fileName');
+  fileInput.addEventListener('change', () => {
+    fileNameLabel.textContent = fileInput.files.length ? fileInput.files[0].name : 'No file selected';
+  });
+
+  const rateSlider = document.getElementById('rate');
+  const updateSlider = () => {
+    const min = Number(rateSlider.min), max = Number(rateSlider.max), val = Number(rateSlider.value);
+    const pct = ((val - min) / (max - min)) * 100;
+    rateSlider.style.background = `linear-gradient(to right, #e0384c 0%, #e0384c ${pct}%, #f2c7de ${pct}%, #f2c7de 100%)`;
+  };
+  rateSlider.addEventListener('input', updateSlider);
+  updateSlider();
+
+  document.getElementById('orderForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Thank you! Your order request has been submitted.');
+  });
+
+  // Dropdown: tap-to-toggle on touch/mobile, hover still works on desktop via CSS
+  const navItem = document.querySelector('.nav-item');
+  const navItemLink = navItem.querySelector(':scope > a');
+  navItemLink.addEventListener('click', (e) => {
+    if (window.matchMedia('(max-width: 700px)').matches) {
+      e.preventDefault();
+      navItem.classList.toggle('open');
+    }
+  });
+
+  document.getElementById('signInForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Signed in successfully!');
+  });
+
+  document.getElementById('signUpForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Account created successfully!');
+  });
+</script>
+
+
+<script>
+  /* ===== Craft Tools: DOM elements and events ===== */
+
+  // Images (apple.jpg, orange.jpg, heads.jpg, tails.jpg) fall back to a drawn badge if the file is missing
+  function badge(text, color) {
+    const svg = "<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100'><circle cx='50' cy='50' r='44' fill='" + color +
+      "' stroke='#1a1a1a' stroke-width='3'/><text x='50' y='60' font-size='30' text-anchor='middle' font-family='Arial' font-weight='700' fill='#1a1a1a'>" + text + "</text></svg>";
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  }
+  const FALLBACKS = {
+    'apple.jpg':  badge('A', '#f06a6a'),
+    'orange.jpg': badge('O', '#ffb347'),
+    'heads.jpg':  badge('H', '#f5d76e'),
+    'tails.jpg':  badge('T', '#cfd8dc')
+  };
+  function setImage(img, file) {
+    img.onerror = function () { img.onerror = null; img.src = FALLBACKS[file]; };
+    img.src = file;
+  }
+
+  // 1. Shortest and longest word
+  function findWords(text) {
+    const words = text.trim().split(/\s+/).filter(Boolean);
+    if (!words.length) return null;
+    let shortest = words[0], longest = words[0];
+    for (let i = 1; i < words.length; i++) {
+      if (words[i].length < shortest.length) shortest = words[i];
+      if (words[i].length > longest.length) longest = words[i];
+    }
+    return { shortest: shortest, longest: longest };
+  }
+  document.getElementById('wordBtn').addEventListener('click', () => {
+    const r = findWords(document.getElementById('wordInput').value);
+    document.getElementById('shortest').textContent = r ? r.shortest : 'Enter some text';
+    document.getElementById('longest').textContent = r ? r.longest : 'Enter some text';
+  });
+
+  // 2. BMI calculator
+  function calculate() {
+    const weight = parseFloat(document.getElementById('weight').value);
+    const height = parseFloat(document.getElementById('height').value);
+    const err = document.getElementById('bmiError');
+    if (!(weight > 0) || !(height > 0)) {
+      err.textContent = 'Enter weight in kilograms and height in meters, for example 60 and 1.65.';
+      return;
+    }
+    err.textContent = '';
+    const bmi = weight / (height * height);
+    let type;
+    if (bmi < 18) type = 'Underweight';
+    else if (bmi < 25) type = 'Normal';
+    else if (bmi <= 30) type = 'Overweight';
+    else type = 'Obese';
+    document.getElementById('score').innerHTML = bmi.toFixed(1);
+    document.getElementById('type').innerHTML = type;
+  }
+
+  // 3. Fruit farm
+  function grow() {
+    const rows = parseInt(document.getElementById('rows').value, 10);
+    const cols = parseInt(document.getElementById('columns').value, 10);
+    const err = document.getElementById('gardenError');
+    const garden = document.getElementById('garden');
+    if (!(rows > 0) || !(cols > 0) || rows > 15 || cols > 15) {
+      err.textContent = 'Enter rows and columns between 1 and 15.';
+      return;
+    }
+    err.textContent = '';
+    garden.innerHTML = '';
+    garden.style.gridTemplateColumns = 'repeat(' + cols + ', minmax(0, 44px))';
+    const arr = ['orange.jpg', 'apple.jpg'];
+    for (let i = 0; i < rows * cols; i++) {
+      const file = arr[Math.floor(Math.random() * 2)]; // 0 or 1, equal probability
+      const img = document.createElement('img');
+      img.width = 100; img.height = 100;
+      img.alt = file === 'apple.jpg' ? 'Apple' : 'Orange';
+      setImage(img, file);
+      garden.appendChild(img);
+    }
+  }
+
+  // 4. Currency converter
+  function convert() {
+    const value = parseFloat(document.getElementById('data').value);
+    const from = document.getElementById('from');
+    const to = document.getElementById('to');
+    const fromUnit = from[from.selectedIndex].value;
+    const toUnit = to[to.selectedIndex].value;
+    const answer = document.getElementById('answer');
+    if (isNaN(value)) { answer.innerHTML = 'Enter an amount'; return; }
+    let result = value;
+    if (fromUnit === 'inr' && toUnit === 'usd') result = value * 0.015;
+    else if (fromUnit === 'usd' && toUnit === 'inr') result = value * 67.12;
+    const symbol = toUnit === 'usd' ? '$' : '\u20B9';
+    answer.innerHTML = symbol + result.toFixed(2);
+  }
+
+  // 5. Coin flip
+  let heads = 0, tails = 0;
+  function flipFunction() {
+    const coin = document.getElementById('coin');
+    if (Math.random() < 0.5) {
+      setImage(coin, 'heads.jpg'); coin.alt = 'Coin showing heads';
+      heads++;
+      document.getElementById('num_heads').innerHTML = heads;
+    } else {
+      setImage(coin, 'tails.jpg'); coin.alt = 'Coin showing tails';
+      tails++;
+      document.getElementById('num_tails').innerHTML = tails;
+    }
+  }
+  document.getElementById('flip').addEventListener('click', flipFunction);
+  setImage(document.getElementById('coin'), 'heads.jpg');
+
+  // 6. Birthday cake order (unobtrusive handler)
+  document.getElementById('submit').addEventListener('click', () => {
+    const small  = parseInt(document.getElementById('small').value, 10)  || 0;
+    const medium = parseInt(document.getElementById('medium').value, 10) || 0;
+    const large  = parseInt(document.getElementById('large').value, 10)  || 0;
+    const tip = Number(document.querySelector('input[name="tip"]:checked').value);
+    const subtotal = small * 100 + medium * 200 + large * 400;
+    const withTax = subtotal * 1.09;
+    const total = withTax * (1 + tip / 100);
+    document.getElementById('price').textContent = '\u20B9' + total.toFixed(2);
+  });
+
+  // Finding elements four ways
+  function flash(nodes) {
+    const list = nodes.length === undefined ? [nodes] : Array.from(nodes);
+    list.forEach(el => el && el.classList.add('hl'));
+    setTimeout(() => list.forEach(el => el && el.classList.remove('hl')), 1800);
+    return list.length;
+  }
+  document.querySelectorAll('[data-find]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const out = document.getElementById('findResult');
+      const how = btn.dataset.find;
+      let n, msg;
+      if (how === 'id') {
+        n = flash(document.getElementById('home'));
+        msg = 'getElementById("home") found ' + n + ' element.';
+      } else if (how === 'tag') {
+        n = flash(document.getElementsByTagName('p'));
+        msg = 'getElementsByTagName("p") found ' + n + ' paragraphs.';
+      } else if (how === 'class') {
+        n = flash(document.getElementsByClassName('product-card'));
+        msg = 'getElementsByClassName("product-card") found ' + n + ' elements.';
+      } else {
+        n = flash(document.querySelectorAll('p.order-like'));
+        msg = 'querySelectorAll("p.order-like") found ' + n + ' element.';
+      }
+      out.textContent = msg;
+    });
+  });
+
+  // Document-level click handler
+  document.addEventListener('click', (e) => {
+    document.getElementById('demo').innerHTML = 'You clicked at x: ' + e.clientX + ', y: ' + e.clientY + '.';
+  });
+
+  // Event playground
+  const log = document.getElementById('eventLog');
+  let logCount = 0;
+  function logEvent(name, detail) {
+    if (logCount === 0) log.innerHTML = '';
+    logCount++;
+    const li = document.createElement('li');
+    li.textContent = name + (detail ? ' \u2013 ' + detail : '');
+    log.insertBefore(li, log.firstChild);
+    while (log.children.length > 6) log.removeChild(log.lastChild);
+  }
+  const box = document.getElementById('playBox');
+  box.addEventListener('mouseover', () => { box.classList.add('hover'); logEvent('mouseover'); });
+  box.addEventListener('mouseout',  () => { box.classList.remove('hover'); logEvent('mouseout'); });
+  let lastMove = 0;
+  box.addEventListener('mousemove', () => {
+    const now = Date.now();
+    if (now - lastMove > 600) { lastMove = now; logEvent('mousemove'); }
+  });
+  ['mousedown', 'mouseup', 'click', 'dblclick'].forEach(t => box.addEventListener(t, () => logEvent(t)));
+  box.addEventListener('keydown', (e) => logEvent('keydown', e.key));
+  box.addEventListener('keyup',   (e) => logEvent('keyup', e.key));
+  const playInput = document.getElementById('playInput');
+  playInput.addEventListener('focus',    () => logEvent('focus'));
+  playInput.addEventListener('blur',     () => logEvent('blur'));
+  playInput.addEventListener('change',   () => logEvent('change', playInput.value));
+  playInput.addEventListener('keydown',  (e) => logEvent('keydown', e.key));
+  playInput.addEventListener('keypress', (e) => logEvent('keypress', e.key));
+  playInput.addEventListener('keyup',    (e) => logEvent('keyup', e.key));
+
+  // Window events: load, resize, scroll
+  window.addEventListener('load', () => {
+    document.getElementById('loadInfo').textContent = 'at ' + new Date().toLocaleTimeString();
+  });
+  function showSize() {
+    document.getElementById('sizeInfo').textContent = window.innerWidth + ' \u00D7 ' + window.innerHeight;
+  }
+  window.addEventListener('resize', showSize);
+  showSize();
+  window.addEventListener('scroll', () => {
+    document.getElementById('scrollInfo').textContent = Math.round(window.scrollY);
+  });
+</script>
+
+</body>
+</html>
